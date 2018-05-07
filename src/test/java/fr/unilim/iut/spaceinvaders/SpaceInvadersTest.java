@@ -22,7 +22,7 @@ public class SpaceInvadersTest {
 				"...............\n" , spaceinvaders.toString());
 	}
 	*/
-	
+	/*Test*/
 	@Test
 	public void test_unNouveauVaisseauEstCorrectementPositionneDansEspaceJeu() {
 		SpaceInvaders spaceinvaders = new SpaceInvaders(15, 10);
