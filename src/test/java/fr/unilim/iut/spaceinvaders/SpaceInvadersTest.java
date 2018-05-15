@@ -13,6 +13,7 @@ public class SpaceInvadersTest {
 	
 	private SpaceInvaders spaceinvaders;
 	
+	@Before
 	public void initialisation() {
 		spaceinvaders = new SpaceInvaders(15, 10);
 	}
