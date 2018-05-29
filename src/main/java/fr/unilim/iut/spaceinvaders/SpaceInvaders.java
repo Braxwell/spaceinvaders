@@ -4,13 +4,11 @@ import fr.unilim.iut.spaceinvaders.util.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.HorsEspaceJeuException;
 
 public class SpaceInvaders {
-
-	private static final char RETOUR_LIGNE = '\n';
-	private static final char MARQUE_VIDE = '.';
-	private static final char MARQUE_VAISSEAU = 'V';
+	
 	int longueur;
 	int hauteur;
 	Vaisseau vaisseau;
+	Missile missile;
 
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
@@ -28,7 +26,7 @@ public class SpaceInvaders {
 			for (int x = 0; x < longueur; x++) {
 				espaceDeJeu.append(recupererMarqueDeLaPosition(x, y));
 			}
-			espaceDeJeu.append(RETOUR_LIGNE);
+			espaceDeJeu.append(Constante.MARQUE_FIN_LIGNE);
 		}
 		return espaceDeJeu.toString();
 	}
@@ -36,9 +34,9 @@ public class SpaceInvaders {
 	private char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
 		if (this.aUnVaisseauQuiOccupeLaPosition(x, y))
-			marque=MARQUE_VAISSEAU;
+			marque=Constante.MARQUE_VAISSEAU;
 		else
-			marque=MARQUE_VIDE;
+			marque=Constante.MARQUE_VIDE;
 		return marque;
 	}
 
@@ -93,6 +91,11 @@ public class SpaceInvaders {
 		Position positionVaisseau = new Position(this.longueur/2,this.hauteur-1);
 		Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
 		positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, Constante.VAISSEAU_VITESSE);
+	}
+
+	public void tirerUnMissile(Dimension dimension, int i) {
+		this.missile = this.vaisseau.tirerUnMissile(dimension,vitesse);
+		
 	}
 
 }
