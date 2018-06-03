@@ -2,6 +2,7 @@ package fr.unilim.iut.spaceinvaders;
 
 import fr.unilim.iut.spaceinvaders.util.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.HorsEspaceJeuException;
+import fr.unilim.iut.spaceinvaders.util.MissileException;
 
 public class SpaceInvaders {
 	
@@ -34,10 +35,20 @@ public class SpaceInvaders {
 	private char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
 		if (this.aUnVaisseauQuiOccupeLaPosition(x, y))
-			marque=Constante.MARQUE_VAISSEAU;
-		else
-			marque=Constante.MARQUE_VIDE;
+			marque = Constante.MARQUE_VAISSEAU;
+		else if (this.aUnMissileQuiOccupeLaPosition(x, y))
+				marque = Constante.MARQUE_MISSILE;
+		else marque = Constante.MARQUE_VIDE;
 		return marque;
+	}
+
+	private boolean aUnMissileQuiOccupeLaPosition(int x, int y) {
+		return (aUnMissile() && missile.occupeLaPosition(x, y));
+	}
+
+	private boolean aUnMissile() {
+		// TODO Auto-generated method stub
+		return missile != null;
 	}
 
 	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
@@ -45,7 +56,7 @@ public class SpaceInvaders {
 	}
 
 	private boolean aUnVaisseau() {
-		return vaisseau!=null;
+		return vaisseau != null;
 	}
 
 	private boolean estDansEspaceJeu(int x, int y) {
@@ -93,9 +104,13 @@ public class SpaceInvaders {
 		positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, Constante.VAISSEAU_VITESSE);
 	}
 
-	public void tirerUnMissile(Dimension dimension, int i) {
-		this.missile = this.vaisseau.tirerUnMissile(dimension,vitesse);
-		
+	public void tirerUnMissile(Dimension dimensionMissile, int vitesseMissile) {
+		if ((vaisseau.getDimension().hauteur()+ dimensionMissile.hauteur()) > this.hauteur ) {
+			throw new MissileException("Pas assez de hauteur libre entre le vaisseau et le haut de l'espace jeu pour tirer le missile");
+		}
+
+		this.missile = this.vaisseau.tirerUnMissile(dimensionMissile,vitesseMissile);
+
 	}
 
 }

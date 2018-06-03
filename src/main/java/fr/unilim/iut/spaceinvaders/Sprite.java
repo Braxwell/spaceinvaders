@@ -5,8 +5,8 @@ public abstract class Sprite {
 	protected Position origine;
 	protected Dimension dimension;
 	protected int vitesse;
-	private int longueur;
-	private int hauteur;
+	//private int longueur;
+	//private int hauteur;
 
 	public Sprite(Dimension dimension, Position origine, int vitesse) {
 		super();
