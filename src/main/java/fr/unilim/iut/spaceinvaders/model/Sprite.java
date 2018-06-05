@@ -1,5 +1,4 @@
-package fr.unilim.iut.spaceinvaders;
-
+package fr.unilim.iut.spaceinvaders.model;
 public abstract class Sprite {
 
 	protected Position origine;
@@ -42,13 +41,9 @@ public abstract class Sprite {
 	public int abscisseLaPlusAGauche() {
 		return this.origine.abscisse();
 	}
-
-	public void seDeplacerVersLaDroite() {
-		this.origine.changerAbscisse(this.origine.abscisse() + vitesse);
-	}
-
-	public void seDeplacerVersLaGauche() {
-		this.origine.changerAbscisse(this.origine.abscisse() - vitesse);
+	
+	public void deplacerHorizontalementVers(Direction direction) {
+		this.origine.changerAbscisse(this.origine.abscisse() + direction.valeur()*vitesse);
 	}
 
 	public void positionner(int x, int y) {
@@ -59,5 +54,9 @@ public abstract class Sprite {
 	public Dimension getDimension() {
 		return dimension;
 	}
-
+	
+	public void deplacerVerticalementVers(Direction direction) {
+		this.origine.changerOrdonnee(this.origine.ordonnee() + direction.valeur()*vitesse);
+	}
+	
 }

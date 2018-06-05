@@ -1,4 +1,4 @@
-package fr.unilim.iut.spaceinvaders;
+package fr.unilim.iut.spaceinvaders.model;
 
 import fr.unilim.iut.spaceinvaders.util.MissileException;
 
@@ -18,7 +18,7 @@ public class Vaisseau extends Sprite {
 		return new Missile(dimensionMissile, positionOrigineMissile, vitesseMissile);
 	}
 
-	private Position calculerLaPositionDeTirDuMissile(Dimension dimensionMissile) {
+	public Position calculerLaPositionDeTirDuMissile(Dimension dimensionMissile) {
 		int abscisseMilieuVaisseau = this.abscisseLaPlusAGauche() + (this.dimension.longueur() / 2);
 		int abscisseOrigineMissile = abscisseMilieuVaisseau - (dimensionMissile.longueur() / 2);
 

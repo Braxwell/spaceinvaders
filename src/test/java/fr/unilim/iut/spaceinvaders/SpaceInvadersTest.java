@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import org.junit.Before;
-
+import fr.unilim.iut.spaceinvaders.model.*;
 import fr.unilim.iut.spaceinvaders.util.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.HorsEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.MissileException;
@@ -248,4 +248,70 @@ public class SpaceInvadersTest {
 		spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
 		spaceinvaders.tirerUnMissile(new Dimension(7,9),1);
 	}
+	
+	@Test
+	public void test_MissileAvanceAutomatiquement_ApresTirDepuisLeVaisseau() {
+
+		spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 2);
+		spaceinvaders.tirerUnMissile(new Dimension(3,2),2);
+
+		spaceinvaders.deplacerMissile();
+
+		assertEquals("" + 
+				"...............\n" + 
+				"...............\n" +
+				"...............\n" + 
+				"...............\n" + 
+				".......MMM.....\n" + 
+				".......MMM.....\n" + 
+				"...............\n" + 
+				"...............\n" + 
+				".....VVVVVVV...\n" + 
+				".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	}
+	
+	@Test
+	public void test_MissileDisparait_QuandIlCommenceASortirDeEspaceJeu() {
+
+		spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(7,2),new Position(5,9), 1);
+		spaceinvaders.tirerUnMissile(new Dimension(3,2),1);
+
+		spaceinvaders.deplacerMissile();
+		spaceinvaders.deplacerMissile();
+		spaceinvaders.deplacerMissile();
+		spaceinvaders.deplacerMissile();
+		spaceinvaders.deplacerMissile();
+		spaceinvaders.deplacerMissile();
+
+		spaceinvaders.deplacerMissile();
+
+		assertEquals("" +
+				"...............\n" + 
+				"...............\n" +
+				"...............\n" + 
+				"...............\n" +
+				"...............\n" +
+				"...............\n" + 
+				"...............\n" +
+				"...............\n" + 
+				".....VVVVVVV...\n" + 
+				".....VVVVVVV...\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+	}
+	
+	@Test
+   	public void test_Vaisseau_Envahisseur() {
+    	spaceinvaders.positionnerUnNouveauVaisseau(new Dimension(3,2),new Position(7,9), 1);
+    	spaceinvaders.positionnerUnNouveauEnvahisseur(new Dimension(3,2),new Position(7,1), 1);
+   		assertEquals("" + 
+   		".......EEE.....\n" + 
+   		".......EEE.....\n" +
+   		"...............\n" + 
+   		"...............\n" + 
+   		"...............\n" + 
+   		"...............\n" + 
+   		"...............\n" + 
+   		"...............\n" + 
+   		".......VVV.....\n" + 
+   		".......VVV.....\n" , spaceinvaders.recupererEspaceJeuDansChaineASCII());
+   	}
 }
