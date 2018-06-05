@@ -1,10 +1,12 @@
 package fr.unilim.iut.spaceinvaders;
 
+import fr.unilim.iut.spaceinvaders.moteurJeu.Commande;
+import fr.unilim.iut.spaceinvaders.moteurJeu.Jeu;
 import fr.unilim.iut.spaceinvaders.util.DebordementEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.HorsEspaceJeuException;
 import fr.unilim.iut.spaceinvaders.util.MissileException;
 
-public class SpaceInvaders {
+public class SpaceInvaders implements Jeu {
 	
 	int longueur;
 	int hauteur;
@@ -14,6 +16,11 @@ public class SpaceInvaders {
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
 		this.hauteur = hauteur;
+	}
+
+	@Override
+	public boolean etreFini() {
+		return false; 
 	}
 
 	@Override
@@ -32,7 +39,7 @@ public class SpaceInvaders {
 		return espaceDeJeu.toString();
 	}
 
-	private char recupererMarqueDeLaPosition(int x, int y) {
+	public char recupererMarqueDeLaPosition(int x, int y) {
 		char marque;
 		if (this.aUnVaisseauQuiOccupeLaPosition(x, y))
 			marque = Constante.MARQUE_VAISSEAU;
@@ -42,24 +49,24 @@ public class SpaceInvaders {
 		return marque;
 	}
 
-	private boolean aUnMissileQuiOccupeLaPosition(int x, int y) {
+	public boolean aUnMissileQuiOccupeLaPosition(int x, int y) {
 		return (aUnMissile() && missile.occupeLaPosition(x, y));
 	}
 
-	private boolean aUnMissile() {
+	public boolean aUnMissile() {
 		// TODO Auto-generated method stub
 		return missile != null;
 	}
 
-	private boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
+	public boolean aUnVaisseauQuiOccupeLaPosition(int x, int y) {
 		return (aUnVaisseau() && vaisseau.occupeLaPosition(x, y));
 	}
 
-	private boolean aUnVaisseau() {
+	public boolean aUnVaisseau() {
 		return vaisseau != null;
 	}
 
-	private boolean estDansEspaceJeu(int x, int y) {
+	public boolean estDansEspaceJeu(int x, int y) {
 		return (((x >= 0) && (x < longueur)) && ((y >= 0) && (y < hauteur)));
 	}
 
@@ -112,5 +119,23 @@ public class SpaceInvaders {
 		this.missile = this.vaisseau.tirerUnMissile(dimensionMissile,vitesseMissile);
 
 	}
+
+	@Override
+	public void evoluer(Commande commandeUser) {
+
+		if (commandeUser.gauche) {
+			deplacerVaisseauVersLaGauche();
+		}
+
+		if (commandeUser.droite) {
+			deplacerVaisseauVersLaDroite();
+		}
+
+	}
+
+	public Vaisseau recupererVaisseau() {
+		return this.vaisseau;
+	}
+	
 
 }
