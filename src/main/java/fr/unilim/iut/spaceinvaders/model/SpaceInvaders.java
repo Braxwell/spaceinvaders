@@ -13,6 +13,7 @@ public class SpaceInvaders implements Jeu {
 	Vaisseau vaisseau;
 	Missile missile;
 	Envahisseur envahisseur;
+	boolean direction = true;
 
 	public SpaceInvaders(int longueur, int hauteur) {
 		this.longueur = longueur;
@@ -121,9 +122,9 @@ public class SpaceInvaders implements Jeu {
 		Position positionVaisseau = new Position(this.longueur/2,this.hauteur-1);
 		Dimension dimensionVaisseau = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
 		positionnerUnNouveauVaisseau(dimensionVaisseau, positionVaisseau, Constante.VAISSEAU_VITESSE);
-		Position positionEnvahisseur = new Position(this.longueur/2, Constante.VAISSEAU_HAUTEUR);
-		Dimension dimensionEnvahisseur = new Dimension(Constante.VAISSEAU_LONGUEUR, Constante.VAISSEAU_HAUTEUR);
-		positionnerUnNouveauEnvahisseur(dimensionEnvahisseur, positionEnvahisseur, Constante.VAISSEAU_VITESSE);
+		Position positionEnvahisseur = new Position(this.longueur/2, Constante.ENVAHISSEUR_HAUTEUR - 1);
+		Dimension dimensionEnvahisseur = new Dimension(Constante.ENVAHISSEUR_LONGUEUR, Constante.ENVAHISSEUR_HAUTEUR);
+		positionnerUnNouveauEnvahisseur(dimensionEnvahisseur, positionEnvahisseur, Constante.ENVAHISSEUR_VITESSE);
 		
 	}
 
@@ -153,6 +154,10 @@ public class SpaceInvaders implements Jeu {
 		if (this.aUnMissile()) {
 			deplacerMissile();
 		}
+		
+		if (this.aUnEnvahisseur()) {
+			deplacerEnvahisseur();
+		}
 
 	}
 
@@ -170,6 +175,19 @@ public class SpaceInvaders implements Jeu {
 		else
 			this.missile.deplacerVerticalementVers(Direction.HAUT_ECRAN);
 		
+	}
+	
+	public void deplacerEnvahisseur() {
+		if(this.envahisseur.abscisseLaPlusAGauche() <= 0)
+			this.direction = true;
+		else if(this.envahisseur.abscisseLaPlusADroite() >= Constante.ESPACEJEU_LONGUEUR - 1)
+			this.direction = false;
+		if(this.direction) {
+			this.envahisseur.deplacerHorizontalementVers(Direction.DROITE);
+		}
+		else {
+			this.envahisseur.deplacerHorizontalementVers(Direction.GAUCHE);
+		}
 	}
 
 	public void positionnerUnNouveauEnvahisseur(Dimension dimension, Position position, int vitesse) {
